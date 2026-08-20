@@ -20,9 +20,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* 대문(랜딩) 디자인이 쓰는 손글씨 느낌 폰트. next/font/google이 번들에 담아둔
+            Gaegu 메타데이터에는 latin 서브셋만 있어서 한글 글리프가 안 나옴 —
+            그래서 이 폰트만 예외적으로 구글 폰트 스타일시트를 직접 불러옴. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
