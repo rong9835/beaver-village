@@ -8,7 +8,30 @@ export const COMMENT_MAX_LENGTH = 30;
 // 반응 안에 링크를 남길 수 있는 도메인 허용 목록.
 const ALLOWED_LINK_DOMAINS = ["instagram.com", "youtube.com", "youtu.be"];
 
-export type CommentValidationErrorCode = "INVALID_INPUT" | "FORBIDDEN_DOMAIN";
+// 욕설·도배성 광고 키워드 금칙어 목록. 승인 절차 없이 즉시 공개되므로 마지막 방어선 역할을 함.
+// 완벽한 목록이 아니라 자주 보이는 패턴 위주의 시작점 — 실제 운영하며 계속 채워야 함.
+const BANNED_KEYWORDS = [
+  "씨발",
+  "씨발놈",
+  "병신",
+  "지랄",
+  "개새끼",
+  "좆",
+  "닥쳐",
+  "카지노",
+  "도박",
+  "먹튀",
+  "대출",
+  "비아그라",
+  "성인용품",
+  "무료체험",
+  "토토사이트",
+];
+
+export type CommentValidationErrorCode =
+  | "INVALID_INPUT"
+  | "FORBIDDEN_DOMAIN"
+  | "BANNED_KEYWORD";
 
 export type CommentValidationResult =
   | { valid: true }
@@ -40,7 +63,23 @@ export function validateComment(content: string): CommentValidationResult {
     };
   }
 
+  if (containsBannedKeyword(content)) {
+    return {
+      valid: false,
+      code: "BANNED_KEYWORD",
+      message: "등록할 수 없는 표현이 포함되어 있어요.",
+    };
+  }
+
   return { valid: true };
+}
+
+function containsBannedKeyword(content: string): boolean {
+  const lowerCaseContent = content.toLowerCase();
+
+  return BANNED_KEYWORDS.some((keyword) => {
+    return lowerCaseContent.includes(keyword.toLowerCase());
+  });
 }
 
 // 본문에서 URL로 보이는 조각을 찾아, 그 도메인이 허용 목록에 없으면 그 도메인 문자열을 돌려줌.

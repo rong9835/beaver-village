@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase/client";
 import type { CommentTargetType, PublicComment } from "@/lib/types";
 import { READABLE_BODY_STYLE } from "@/lib/notebookTheme";
@@ -21,36 +21,37 @@ type LoadState = "loading" | "error" | "loaded";
 export function CommentList({ targetType, targetId }: CommentListProps) {
   const [loadState, setLoadState] = useState<LoadState>("loading");
   const [comments, setComments] = useState<PublicComment[]>([]);
+  const isCancelledRef = useRef(false);
 
-  useEffect(() => {
-    let isCancelled = false;
+  async function loadComments() {
+    const { data, error } = await supabase
+      .from("comments_public")
+      .select("*")
+      .eq("target_type", targetType)
+      .eq("target_id", targetId)
+      .order("created_at", { ascending: false });
 
-    async function loadComments() {
-      const { data, error } = await supabase
-        .from("comments_public")
-        .select("*")
-        .eq("target_type", targetType)
-        .eq("target_id", targetId)
-        .order("created_at", { ascending: false });
-
-      if (isCancelled) {
-        return;
-      }
-
-      if (error) {
-        setLoadState("error");
-        return;
-      }
-
-      setComments(data);
-      setLoadState("loaded");
+    if (isCancelledRef.current) {
+      return;
     }
 
+    if (error) {
+      setLoadState("error");
+      return;
+    }
+
+    setComments(data);
+    setLoadState("loaded");
+  }
+
+  useEffect(() => {
+    isCancelledRef.current = false;
     loadComments();
 
     return () => {
-      isCancelled = true;
+      isCancelledRef.current = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetType, targetId]);
 
   return (
@@ -88,7 +89,11 @@ export function CommentList({ targetType, targetId }: CommentListProps) {
         )}
       </div>
 
-      <CommentForm targetType={targetType} targetId={targetId} />
+      <CommentForm
+        targetType={targetType}
+        targetId={targetId}
+        onPosted={loadComments}
+      />
     </section>
   );
 }
@@ -105,13 +110,14 @@ function CommentListSkeleton() {
 type CommentFormProps = {
   targetType: CommentTargetType;
   targetId: string;
+  onPosted: () => void;
 };
 
 type SubmitState = "idle" | "submitting" | "success";
 
 // 기능명세서 D-01/D-03: 클라이언트에서 먼저 검사해 즉각 피드백을 준 다음
 // POST /api/comments로 보냄(그 안에서 서버 검증·레이트리밋을 다시 거침).
-function CommentForm({ targetType, targetId }: CommentFormProps) {
+function CommentForm({ targetType, targetId, onPosted }: CommentFormProps) {
   const [content, setContent] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -149,6 +155,7 @@ function CommentForm({ targetType, targetId }: CommentFormProps) {
 
     setContent("");
     setSubmitState("success");
+    onPosted();
   }
 
   return (
@@ -172,7 +179,7 @@ function CommentForm({ targetType, targetId }: CommentFormProps) {
 
       <div className="flex items-center justify-between gap-2">
         <p className="text-[13px] text-[#a89a82]">
-          {errorMessage ?? (submitState === "success" ? "등록됐어요. 확인 후 공개됩니다." : "")}
+          {errorMessage ?? (submitState === "success" ? "등록됐어요!" : "")}
         </p>
 
         <button

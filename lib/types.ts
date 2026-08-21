@@ -40,7 +40,6 @@ export type PublicComment = {
   target_type: CommentTargetType;
   target_id: string | null;
   content: string;
-  approved: boolean;
   created_at: string;
 };
 

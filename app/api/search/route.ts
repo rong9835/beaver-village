@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase/client";
+import { supabaseServiceClient } from "@/lib/supabase/serviceClient";
 import { embedText } from "@/lib/rag/embed";
 import { generateAnswer } from "@/lib/rag/generateAnswer";
 import { normalizeQuery } from "@/lib/rag/normalizeQuery";
@@ -58,7 +59,10 @@ export async function GET(request: NextRequest) {
 
   if (!isAllowed) {
     return NextResponse.json(
-      { error: "잠시 후 다시 시도해주세요." },
+      {
+        error:
+          "너무 빠르게 요청했어요. 1분 정도 기다렸다가 다시 시도해주세요.",
+      },
       { status: 429 },
     );
   }
@@ -76,7 +80,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (cachedEntry) {
-    const { error: cacheHitError } = await supabase.rpc(
+    const { error: cacheHitError } = await supabaseServiceClient.rpc(
       "upsert_search_cache",
       {
         p_normalized_query: normalizedQuery,
@@ -134,7 +138,7 @@ export async function GET(request: NextRequest) {
 
   const monthKey = getCurrentMonthKey();
 
-  const { data: isUnderBudget, error: budgetError } = await supabase.rpc(
+  const { data: isUnderBudget, error: budgetError } = await supabaseServiceClient.rpc(
     "check_generation_budget",
     {
       p_month_key: monthKey,
@@ -179,7 +183,7 @@ export async function GET(request: NextRequest) {
 
   const paperIds = getUniquePaperIds(typedMatchedChunks);
 
-  const { error: cacheWriteError } = await supabase.rpc(
+  const { error: cacheWriteError } = await supabaseServiceClient.rpc(
     "upsert_search_cache",
     {
       p_normalized_query: normalizedQuery,
