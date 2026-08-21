@@ -1,4 +1,5 @@
 import type { Article } from "@/lib/types";
+import { READABLE_BODY_STYLE } from "@/lib/notebookTheme";
 
 type SourceCitationProps = {
   article: Pick<
@@ -20,18 +21,19 @@ export function SourceCitation({ article }: SourceCitationProps) {
   }
 
   return (
-    <section className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-      <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-        논문 출처
-      </h2>
-      <p className="text-sm text-zinc-800 dark:text-zinc-200">
+    <section
+      className="rounded-2xl border-2 border-dashed border-[#cbbfa3] bg-[#f7f0dd] p-4"
+      style={READABLE_BODY_STYLE}
+    >
+      <h2 className="mb-2 text-[14px] font-bold text-[#8a7a63]">논문 출처</h2>
+      <p className="text-[15px] text-[#33261a]">
         {article.source_author} ({article.source_year}). {article.source_title}
       </p>
       <a
         href={article.source_url ?? undefined}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-1 inline-block text-sm text-blue-600 underline dark:text-blue-400"
+        className="mt-1 inline-block text-[15px] text-[#c2571f] underline hover:text-[#a5481a]"
       >
         원문 보기
       </a>

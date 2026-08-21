@@ -13,14 +13,14 @@ const QUESTION_CHIPS: QuestionChip[] = [
 
 export function QuestionChips() {
   return (
-    <div className="mt-[22px] flex flex-wrap items-center gap-3">
-      <span className="text-[19px] text-[#8a7a63]">이런 걸 많이 물어봐요 →</span>
+    <div className="mt-4 flex flex-wrap items-center gap-2.5 sm:mt-[22px] sm:gap-3">
+      <span className="text-[15px] text-[#8a7a63] sm:text-[19px]">이런 걸 많이 물어봐요 →</span>
 
       {QUESTION_CHIPS.map((chip) => (
         <button
           key={chip.label}
           type="button"
-          className={`rounded-full border-2 border-[#7a5a3a] bg-[#fdf1d8] px-4 py-2 text-[19px] text-[#4b3a28] hover:bg-[#f6e2b8] ${chip.rotationClassName}`}
+          className={`rounded-full border-2 border-[#7a5a3a] bg-[#fdf1d8] px-3 py-1.5 text-[15px] text-[#4b3a28] hover:bg-[#f6e2b8] sm:px-4 sm:py-2 sm:text-[19px] ${chip.rotationClassName}`}
         >
           {chip.label}
         </button>

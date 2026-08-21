@@ -12,6 +12,9 @@ import { SourceCitation } from "@/components/article/SourceCitation";
 import { LazyYoutubeEmbed } from "@/components/article/LazyYoutubeEmbed";
 import { CommentList } from "@/components/article/CommentList";
 import { NextReads } from "@/components/article/NextReads";
+import { PageFrame } from "@/components/layout/PageFrame";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { NOTEBOOK_LINES_STYLE } from "@/lib/notebookTheme";
 
 type ArticlePageParams = {
   category: string;
@@ -102,34 +105,43 @@ export default async function ArticlePage({
   };
 
   return (
-    <article className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4 py-12">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+    <PageFrame>
+      <article
+        className="flex flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-8 sm:py-8 md:px-[54px] md:pt-9 md:pb-[34px]"
+        style={NOTEBOOK_LINES_STYLE}
+      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
 
-      <header className="flex flex-col gap-2">
-        <span className="w-fit rounded bg-zinc-100 px-2 py-0.5 text-xs text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-          {CATEGORY_LABELS[article.category]}
-        </span>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-          {article.question}
-        </h1>
-      </header>
+        <header className="flex flex-col gap-3 font-[family-name:var(--font-gaegu)] sm:gap-4">
+          <PageHeader current="library" />
 
-      <ArticleBody content={article.content} />
+          <div className="h-1 bg-[#e8c9a0]" />
 
-      <SourceCitation article={article} />
+          <span className="w-fit rounded-full border-2 border-[#7a5a3a] bg-[#fdf1d8] px-3 py-0.5 text-[13px] text-[#4b3a28]">
+            {CATEGORY_LABELS[article.category]}
+          </span>
+          <h1 className="text-[26px] leading-[1.3] font-bold text-[#33261a] sm:text-[34px]">
+            {article.question}
+          </h1>
+        </header>
 
-      {article.youtube_video_id && (
-        <LazyYoutubeEmbed youtubeVideoId={article.youtube_video_id} />
-      )}
+        <ArticleBody content={article.content} />
 
-      <CommentList targetId={article.id} />
+        <SourceCitation article={article} />
 
-      <NextReads articles={nextReads} />
-    </article>
+        {article.youtube_video_id && (
+          <LazyYoutubeEmbed youtubeVideoId={article.youtube_video_id} />
+        )}
+
+        <CommentList targetType="article" targetId={article.id} />
+
+        <NextReads articles={nextReads} />
+      </article>
+    </PageFrame>
   );
 }

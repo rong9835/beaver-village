@@ -14,7 +14,7 @@ export function LazyYoutubeEmbed({ youtubeVideoId }: LazyYoutubeEmbedProps) {
 
   if (thumbnailFailed) {
     return (
-      <p className="rounded-lg border border-zinc-200 bg-zinc-50 p-6 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+      <p className="rounded-2xl border-2 border-dashed border-[#cbbfa3] bg-[#f7f0dd] p-6 text-center text-[15px] text-[#8a7a63]">
         영상을 불러올 수 없어요
       </p>
     );

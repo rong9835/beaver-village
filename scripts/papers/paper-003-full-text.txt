@@ -1,0 +1,15 @@
+There are two species of beavers: the European beaver (Castor fiber) and the Canadian beaver (Castor canadensis). Both species are herbivorous and belong to a small group of mammals with a diet containing a large quantity of woody plants.
+
+The Canadian beaver stomach was first documented in 1868, and very few anatomical and histological descriptions of this organ have been published since then. The European beaver's stomach morphology remained largely undocumented until this study, which aimed to characterize its structural features using light and electron microscopy.
+
+Researchers examined ten male and ten female European beavers (Castor fiber) between two to six years of age. The stomachs were removed immediately after the heart stopped and used for anatomical and histological studies (12 individuals) as well as ultrastructural investigations (8 individuals).
+
+The cardiogastric gland (CGG) was located immediately behind the oesophageal entrance along the lesser curvature of the stomach. It was visible as a dark red, globular structure with a diameter of approximately 5 centimeters. The CGG was connected to the stomach cavity by 36 to 40 orifices on its luminal surface.
+
+Mucous neck cells represented less than 0.1% of cells in the CGG gastric glands, compared to 22 to 32% of cells in the proper (ordinary) gastric glands elsewhere in the stomach. The number of chief cells and parietal cells in the proper gastric glands of the CGG was almost equal, which is an unusual composition compared to typical mammalian stomach glands.
+
+The mucosal surface in the fundus and corpus region was covered by a very thick layer of mucus that completely filled the upper parts of the gastric pits. The mucus reached a thickness of 950 micrometers in frozen, non-dehydrated sections and 400 micrometers in paraffin sections, making it substantially thicker than the protective mucus layer found in most other mammals.
+
+The researchers identified four unique morphological features distinguishing beaver stomachs from those of other mammals, including the specialized cardiogastric gland structure with its unusual proportion of chief and parietal cells, the presence of skeletal muscle tissue in the muscularis layer surrounding the gland (skeletal muscle is normally found only in the esophagus and rarely deep in the stomach wall of mammals), and the exceptionally thick protective mucus layer. The chief cell development in the cardiogastric gland appeared to follow an unconventional pathway, differentiating directly from undifferentiated cells rather than from mucous neck cells as is typical in ordinary gastric gland development.
+
+These findings suggest the beaver stomach, and in particular its cardiogastric gland, represents a valuable model for studying cellular differentiation processes in the gastric epithelium, as well as an adaptation that may be related to the beaver's woody, fibrous diet.

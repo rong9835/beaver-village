@@ -39,7 +39,7 @@ export function DoodleMargin({ side }: DoodleMarginProps) {
   const items = side === "left" ? LEFT_MARGIN_DOODLES : RIGHT_MARGIN_DOODLES;
 
   return (
-    <div className="relative bg-[#f7f0dd]">
+    <div className="relative h-full bg-[#f7f0dd]">
       {items.map((item, index) => (
         <div key={index} className={`absolute ${item.className}`}>
           <BeaverSprite kind={item.kind} className="h-full w-full" />
